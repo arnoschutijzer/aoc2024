@@ -39,7 +39,7 @@ func TestDay1CalculatesSimilarityFromInput(t *testing.T) {
 	firstList, secondList := parseInput()
 
 	similarity := day1.CalculateTotalSimilarityBetween(firstList, secondList)
-	assert.Equal(t, 31, similarity)
+	assert.Equal(t, 24643097, similarity)
 }
 
 func parseInput() ([]int, []int) {
