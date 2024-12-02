@@ -50,10 +50,10 @@ func CalculateTotalSimilarityBetween(firstList []int, secondList []int) int {
 		similarities[key] += key * value
 	}
 
-	similarity := 0
+	totalSimilarity := 0
 	for _, id := range firstList {
-		similarity += similarities[id]
+		totalSimilarity += similarities[id]
 	}
 
-	return similarity
+	return totalSimilarity
 }
