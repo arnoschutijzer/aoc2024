@@ -1,7 +1,6 @@
 package day1_test
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -23,8 +22,28 @@ func TestDay1ReturnsTotalDistanceBetween2EqualLists(t *testing.T) {
 }
 
 func TestDay1(t *testing.T) {
-	bytes, err := os.ReadFile("./input.txt")
+	firstList, secondList := parseInput()
+
+	distance, err := day1.CalculateTotalDistanceBetween(firstList, secondList)
+
 	assert.Nil(t, err)
+	assert.Equal(t, 2769675, distance)
+}
+
+func TestDay1ReturnsTotalSimilarityBetween2Lists(t *testing.T) {
+	similarity := day1.CalculateTotalSimilarityBetween([]int{3, 4, 2, 1, 3, 3}, []int{4, 3, 5, 3, 9, 3})
+	assert.Equal(t, 31, similarity)
+}
+
+func TestDay1CalculatesSimilarityFromInput(t *testing.T) {
+	firstList, secondList := parseInput()
+
+	similarity := day1.CalculateTotalSimilarityBetween(firstList, secondList)
+	assert.Equal(t, 31, similarity)
+}
+
+func parseInput() ([]int, []int) {
+	bytes, _ := os.ReadFile("./input.txt")
 
 	contents := string(bytes)
 	lines := strings.Split(contents, "\n")
@@ -35,25 +54,18 @@ func TestDay1(t *testing.T) {
 	for i := range lines {
 		line := lines[i]
 
-		fmt.Println(line)
-
 		// skip empty lines
 		if len(line) == 0 {
 			continue
 		}
 
 		columns := strings.Split(line, "   ")
-		firstValue, err := strconv.Atoi(columns[0])
-		assert.Nil(t, err)
+		firstValue, _ := strconv.Atoi(columns[0])
 		firstList = append(firstList, firstValue)
 
-		secondValue, err := strconv.Atoi(columns[1])
-		assert.Nil(t, err)
+		secondValue, _ := strconv.Atoi(columns[1])
 		secondList = append(secondList, secondValue)
 	}
 
-	distance, err := day1.CalculateTotalDistanceBetween(firstList, secondList)
-
-	assert.Nil(t, err)
-	assert.Equal(t, 2769675, distance)
+	return firstList, secondList
 }

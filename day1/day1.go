@@ -30,3 +30,30 @@ func absDifference(a int, b int) int {
 
 	return b - a
 }
+
+func CalculateTotalSimilarityBetween(firstList []int, secondList []int) int {
+	uniqueIdsFromFirstList := make(map[int]int)
+
+	for _, id := range firstList {
+		uniqueIdsFromFirstList[id] = 0
+	}
+
+	for _, id := range secondList {
+		_, ok := uniqueIdsFromFirstList[id]
+		if ok {
+			uniqueIdsFromFirstList[id] = uniqueIdsFromFirstList[id] + 1
+		}
+	}
+
+	similarities := make(map[int]int)
+	for key, value := range uniqueIdsFromFirstList {
+		similarities[key] += key * value
+	}
+
+	similarity := 0
+	for _, id := range firstList {
+		similarity += similarities[id]
+	}
+
+	return similarity
+}
