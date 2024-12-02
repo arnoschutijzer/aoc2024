@@ -54,11 +54,6 @@ func parseInput() ([]int, []int) {
 	for i := range lines {
 		line := lines[i]
 
-		// skip empty lines
-		if len(line) == 0 {
-			continue
-		}
-
 		columns := strings.Split(line, "   ")
 		firstValue, _ := strconv.Atoi(columns[0])
 		firstList = append(firstList, firstValue)
