@@ -1,5 +1,33 @@
 package day2
 
+func GetTotalSafeLevels(reports []Report) int {
+	safeReports := 0
+	for _, report := range reports {
+
+		if report.IsSafe() {
+			safeReports += 1
+		}
+	}
+
+	return safeReports
+}
+
+type Report struct {
+	Levels []int
+}
+
+func (l *Report) IsSafe() bool {
+	comparator := getIsSafeComparator(l.Levels[0], l.Levels[1])
+
+	for i := 0; i < len(l.Levels)-1; i++ {
+		if !(comparator(l.Levels[i], l.Levels[i+1])) {
+			return false
+		}
+	}
+
+	return true
+}
+
 func getIsSafeComparator(a int, b int) func(a int, b int) bool {
 	isGradually := func(a int, b int) bool {
 		return absDifference(a, b) > 0 && absDifference(a, b) <= 3
@@ -22,28 +50,4 @@ func absDifference(a int, b int) int {
 	}
 
 	return b - a
-}
-
-func IsSafe(level []int) bool {
-	comparator := getIsSafeComparator(level[0], level[1])
-
-	for i := 0; i < len(level)-1; i++ {
-		if !(comparator(level[i], level[i+1])) {
-			return false
-		}
-	}
-
-	return true
-}
-
-func CountSafeReports(report [][]int) int {
-	safeReports := 0
-	for _, level := range report {
-
-		if IsSafe(level) {
-			safeReports += 1
-		}
-	}
-
-	return safeReports
 }

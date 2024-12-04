@@ -11,55 +11,54 @@ import (
 )
 
 func TestIsSafeForFirstLineInExample(t *testing.T) {
-	safe := day2.IsSafe([]int{7, 6, 4, 2, 1})
-	assert.True(t, safe)
+	report := day2.Report{Levels: []int{7, 6, 4, 2, 1}}
+	assert.True(t, report.IsSafe())
 }
 
 func TestIsUnsafeWhenIncreasingWithFive(t *testing.T) {
-	safe := day2.IsSafe([]int{1, 2, 7, 8, 9})
-	assert.False(t, safe)
+	report := day2.Report{Levels: []int{1, 2, 7, 8, 9}}
+	assert.False(t, report.IsSafe())
 }
 
 func TestIsUnsafeWhenDecreasingWithFour(t *testing.T) {
-	safe := day2.IsSafe([]int{9, 7, 6, 2, 1})
-	assert.False(t, safe)
+	report := day2.Report{Levels: []int{9, 7, 6, 2, 1}}
+	assert.False(t, report.IsSafe())
 }
 
 func TestIsUnsafeWhenFirstIncreasingAndThenDecreasing(t *testing.T) {
-	safe := day2.IsSafe([]int{1, 3, 2, 4, 5})
-	assert.False(t, safe)
+	report := day2.Report{Levels: []int{1, 3, 2, 4, 5}}
+	assert.False(t, report.IsSafe())
 }
 
 func TestIsUnsafeWhenNoIncreaseOrDecrease(t *testing.T) {
-	safe := day2.IsSafe([]int{8, 6, 4, 4, 1})
-	assert.False(t, safe)
+	report := day2.Report{Levels: []int{8, 6, 4, 4, 1}}
+	assert.False(t, report.IsSafe())
 }
 
 func TestFailing(t *testing.T) {
-	safe := day2.IsSafe([]int{42, 44, 46, 48, 55})
-	assert.False(t, safe)
+	report := day2.Report{Levels: []int{42, 44, 46, 48, 55}}
+	assert.False(t, report.IsSafe())
 }
 
 func TestGetNumberOfSafeReports(t *testing.T) {
-	report := readReport("./input.txt")
-	safeReports := day2.CountSafeReports(report)
+	reports := readReport("./input.txt")
+	safeReports := day2.GetTotalSafeLevels(reports)
 	assert.Equal(t, 236, safeReports)
 }
 
 func TestGetNumberOfSafeReportsFromExample(t *testing.T) {
-	report := readReport("./example.txt")
-	safeReports := day2.CountSafeReports(report)
+	reports := readReport("./example.txt")
+	safeReports := day2.GetTotalSafeLevels(reports)
 	assert.Equal(t, 2, safeReports)
 }
 
-func readReport(path string) [][]int {
+func readReport(path string) []day2.Report {
 	bytes, _ := os.ReadFile(path)
 	content := string(bytes)
 
 	lines := strings.Split(content, "\n")
 
-	report := make([][]int, 0)
-
+	reports := []day2.Report{}
 	for _, line := range lines {
 		numbersAsText := strings.Split(line, " ")
 
@@ -69,8 +68,8 @@ func readReport(path string) [][]int {
 			numbersAsInt = append(numbersAsInt, number)
 		}
 
-		report = append(report, numbersAsInt)
+		reports = append(reports, day2.Report{Levels: numbersAsInt})
 	}
 
-	return report
+	return reports
 }
