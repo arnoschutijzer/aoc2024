@@ -43,7 +43,7 @@ func TestFailing(t *testing.T) {
 func TestGetNumberOfSafeReports(t *testing.T) {
 	report := readReport("./input.txt")
 	safeReports := day2.CountSafeReports(report)
-	assert.Equal(t, 0, safeReports)
+	assert.Equal(t, 236, safeReports)
 }
 
 func TestGetNumberOfSafeReportsFromExample(t *testing.T) {

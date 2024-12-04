@@ -1,7 +1,5 @@
 package day2
 
-import "fmt"
-
 func getIsSafeComparator(a int, b int) func(a int, b int) bool {
 	isGradually := func(a int, b int) bool {
 		return absDifference(a, b) > 0 && absDifference(a, b) <= 3
@@ -40,10 +38,9 @@ func IsSafe(level []int) bool {
 
 func CountSafeReports(report [][]int) int {
 	safeReports := 0
-	for index, level := range report {
+	for _, level := range report {
 
 		if IsSafe(level) {
-			fmt.Println(index, level)
 			safeReports += 1
 		}
 	}
